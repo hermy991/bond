@@ -1,0 +1,34 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#fa1b49",
+    "activityBar.activeBorder": "#155e02",
+    "activityBar.background": "#fa1b49",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#155e02",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#dd0531",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#fa1b49",
+    "titleBar.activeBackground": "#dd0531",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#dd053199",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "editorRuler.foreground": "#ff4081",
+    "sash.hoverBorder": "#fa1b49",
+    "statusBarItem.remoteBackground": "#dd0531",
+    "statusBarItem.remoteForeground": "#e7e7e7"
+  },
+  "peacock.color": "#dd0531",
+  "deno.enable": true,
+  "deno.unstable": true,
+  "deno.config": "./deno.jsonc",
+  "deno.lint": true,
+  "deno.suggest.imports.hosts": {
+    "https://deno.land/": true
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "editor.guides.bracketPairs": true,
+  "editor.rulers": [120]
+}

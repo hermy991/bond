@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "importMap": "./import_map.json",
+  "fmt": {
+    "options": {
+      "lineWidth": 120
+    }
+  }
+}
