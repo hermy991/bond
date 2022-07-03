@@ -3,7 +3,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "importMap": "./import_map.json",
+  "importMap": "./import_map.jsonc",
   "fmt": {
     "options": {
       "lineWidth": 120
