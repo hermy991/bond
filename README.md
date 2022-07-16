@@ -1,6 +1,6 @@
-# Relational Framework (RF)
+# Bond
 
-Relational Framework is a ORM that can run in deno platforms and can be use with JavaScript. From small applications with a few tables
+Bond is a ORM that can run in deno platforms and can be use with JavaScript and TypeScript. From small applications with a few tables
 to large scale enterprise applications with multiple databases.
 
 ## Features
