@@ -1,4 +1,7 @@
 {
+  "tasks": {
+    "db": "deno run --allow-env=DENO_DEPLOYMENT_ID ./src/db-internal/save.ts"
+  },
   "compilerOptions": {
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

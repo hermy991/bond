@@ -23,6 +23,7 @@
   "deno.enable": true,
   "deno.unstable": true,
   "deno.config": "./deno.jsonc",
+  "deno.importMap": "./import_map.jsonc",
   "deno.lint": true,
   "deno.suggest.imports.hosts": {
     "https://deno.land/": true

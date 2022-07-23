@@ -1,11 +1,11 @@
 # Bond
 
-Bond is a ORM that can run in deno platforms and can be use with JavaScript and TypeScript. From small applications with a few tables
-to large scale enterprise applications with multiple databases.
+Bond is a ORM that can run in deno platforms and can be use with JavaScript and TypeScript. From small applications with
+a few tables to large scale enterprise applications with multiple databases.
 
 ## Features
 
-- [ ] Entities and columns
+- [ ] [Entities and columns](#entities-and-columns)
 - [ ] Clean object relational model
 - [ ] Associations (relations)
   - [ ] Uni-directional relations
@@ -42,3 +42,54 @@ to large scale enterprise applications with multiple databases.
 - [ ] CLI
   - [ ] Code First
   - [ ] Database First
+
+## Entities and columns
+
+Entity object that maps to a database table. You can create an entity by defining a new object and using it with
+`createEntity()` function:
+
+```typescript
+import { createEntity } from "https://deno.land/x/bond/mod.ts";
+
+const user = createEntity({
+  entity: "user",
+  schema: "testing",
+  columns: {
+    firstName: { type: "string", default: "Hermy" },
+    lastName: { type: "string", default: "Garcia" },
+  },
+});
+
+export default user;
+```
+
+Bond is very flexible, you could define entity in many ways.
+
+```typescript
+import { createEntity } from "https://deno.land/x/bond/mod.ts";
+
+const user = createEntity({
+  entity: "testing.user",
+  columns: [
+    { name: "firstName", type: "string", default: "Hermy" },
+    { name: "lastName", type: "string", default: "Garcia" },
+  ],
+});
+
+export default user;
+```
+
+You can create an entity by defining a new class and using it with `Entity()` function:
+
+```typescript
+import { Column, Entity } from "https://deno.land/x/bond/mod.ts";
+
+@Entity({ name: "user", scheme: "testing" })
+export class User {
+  @Column()
+  firstName: string = "Hermy";
+
+  @Column()
+  lastName: string = "Garcia";
+}
+```
