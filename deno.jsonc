@@ -1,9 +1,8 @@
 {
   "tasks": {
-    "db": "deno run --allow-env=DENO_DEPLOYMENT_ID ./src/db-internal/save.ts"
+    "test": "deno test --allow-env=DENO_DEPLOYMENT_ID "
   },
   "compilerOptions": {
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
   "importMap": "./import_map.jsonc",
