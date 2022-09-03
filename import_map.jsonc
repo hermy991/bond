@@ -1,6 +1,6 @@
 {
   "imports": {
-    "std/": "https://deno.land/std@0.146.0/",
-    "indexeddb": "https://deno.land/x/indexeddb@1.3.4/ponyfill_memory.ts"
+    "std/": "https://deno.land/std@0.154.0/",
+    "indexeddb": "https://deno.land/x/indexeddb@1.3.5/ponyfill_memory.ts"
   }
 }
