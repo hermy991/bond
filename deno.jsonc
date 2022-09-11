@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "test": "deno test --allow-env=DENO_DEPLOYMENT_ID "
+    "test": "deno test --allow-ffi --allow-env --unstable "
   },
   "compilerOptions": {
-    "emitDecoratorMetadata": true
+    // "emitDecoratorMetadata": true
   },
   "importMap": "./import_map.jsonc",
   "fmt": {

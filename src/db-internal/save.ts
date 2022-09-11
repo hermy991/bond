@@ -1,24 +1,20 @@
-import { indexedDB } from "indexeddb";
 import { ErrorInternalConnection } from "./erros.ts";
+import { saveTable } from "./interface-sqlite3.ts";
 import { TypeIndexedEntity } from "./types.ts";
-
-let db;
-
 export const save = (props: TypeIndexedEntity) => {
-  const request = indexedDB.open("bond", 3);
-  request.onerror = (event) => {
-    console.log(event);
-    throw ErrorInternalConnection;
-  };
-  request.onupgradeneeded = (event: any) => {
-    if (event?.target?.result) {
-      db = event.target.result;
-      // console.log({ db });
-      const objectStore = db.createObjectStore("names", { autoIncrement: true });
-      // const objectStore = transaction.objectStore("customers");
-      objectStore.add("Hermy");
-      // const transaction = db.transaction(["customers"], "readwrite");
-      // const { type, value } = props;
-    }
-  };
+  saveTable({
+    name: "customer",
+    columns: [
+      {
+        tableName: "customer",
+        name: "customer_ID",
+        type: "int",
+        oritinalType: "int",
+        autoIncrement: true,
+        unique: true,
+        bytes: 4,
+        nullable: false,
+      },
+    ],
+  });
 };
