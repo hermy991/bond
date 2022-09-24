@@ -42,61 +42,53 @@ export type TypeInternalTimeZone =
 // int4: INTEGER | INT = A normal-size integer. The signed range is -2147483648 to 2147483647. The unsigned range is 0 to 4294967295.
 // int8: BIGINT = A large integer. The signed range is -9223372036854775808 to 9223372036854775807. The unsigned range is 0 to 18446744073709551615.
 // bit:  BIT = Fixed-length bit string.
-export type TypeInternalColumnInt = "int";
+export type TypeInternalInt = "int";
 
-export type TypeInternalColumnDecimal = "decimal";
+export type TypeInternalDecimal = "decimal";
 
-export type TypeInternalColumnFloat = "float";
+export type TypeInternalFloat = "float";
 
-export type TypeInternalColumnNumber =
-  | TypeInternalColumnInt
-  | TypeInternalColumnDecimal
-  | TypeInternalColumnFloat;
+export type TypeInternalNumber =
+  | TypeInternalInt
+  | TypeInternalDecimal
+  | TypeInternalFloat;
 
-export type TypeInternalColumnCharacter = "character";
+export type TypeInternalCharacter = "character";
 
-export type TypeInternalColumnVarchar = "varchar";
+export type TypeInternalVarchar = "varchar";
 
-export type TypeInternalColumnString = TypeInternalColumnCharacter | TypeInternalColumnVarchar;
+export type TypeInternalString = TypeInternalCharacter | TypeInternalVarchar;
 
-export type TypeInternalColumnBinary = "binary";
+export type TypeInternalBinary = "binary";
 
-export type TypeInternalColumnVarbinary = "varbinary";
+export type TypeInternalVarbinary = "varbinary";
 
-export type TypeInternalColumnBiteArray = TypeInternalColumnBinary | TypeInternalColumnVarbinary;
+export type TypeInternalBiteArray = TypeInternalBinary | TypeInternalVarbinary;
 
-export type TypeInternalColumnTime = "time";
+export type TypeInternalTime = "time";
 
-export type TypeInternalColumnTimestamp = "timestamp";
+export type TypeInternalTimestamp = "timestamp";
 
-export type TypeInternalColumnDateAndTime = TypeInternalColumnTime | TypeInternalColumnTimestamp;
+export type TypeInternalDateAndTime = TypeInternalTime | TypeInternalTimestamp;
 
-export type TypeInternalColumn =
-  | TypeInternalColumnNumber
-  | TypeInternalColumnString
-  | TypeInternalColumnBiteArray
-  | TypeInternalColumnDateAndTime
+export type TypeInternalType =
+  | TypeInternalNumber
+  | TypeInternalString
+  | TypeInternalBiteArray
+  | TypeInternalDateAndTime
   | "json";
 
-export type TypeInternalColumnProp = {
-  name: string;
-  type: TypeInternalColumn;
-  oritinalType: string;
-  autoIncrement: boolean;
-  unique: boolean;
-  bytes?: number | "max";
-  size?: number | "max";
-  nullable: boolean;
-  presition?: string;
-  scale?: string;
-  timeZone?: TypeInternalTimeZone;
-  default?: string;
-};
-
-export type TypeInternalTableProp = {
-  name: string;
-  schema?: string;
-  fullName: string;
-  columns: [TypeInternalColumn, ...TypeInternalColumn[]];
-  primatyKey: [string, ...string[]];
-};
+// export type TypeInternalColumnProp = {
+//   name: string;
+//   type: TypeInternalColumn;
+//   oritinalType: string;
+//   autoIncrement: boolean;
+//   unique: boolean;
+//   bytes?: number | "max";
+//   size?: number | "max";
+//   nullable: boolean;
+//   presition?: string;
+//   scale?: string;
+//   timeZone?: TypeInternalTimeZone;
+//   default?: string;
+// };

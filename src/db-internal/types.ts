@@ -1,6 +1,8 @@
-export type TypeIndexedEntity = {
+import { TypeInternalEntityParam } from "./entity.ts";
+
+export type TypeInternalEntity = {
   type: "entity";
-  value: { name: string; schema?: string };
+  value: TypeInternalEntityParam;
 };
 
-export type TypeSaveProps = TypeIndexedEntity;
+export type TypeSaveProps = TypeInternalEntity;

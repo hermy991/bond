@@ -1,6 +1,0 @@
-{
-  "imports": {
-    "std/": "https://deno.land/std@0.154.0/",
-    "sqlite3": "https://deno.land/x/sqlite3@0.5.2/mod.ts"
-  }
-}

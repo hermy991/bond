@@ -1,20 +1,7 @@
-import { ErrorInternalConnection } from "./erros.ts";
-import { saveTable } from "./interface-sqlite3.ts";
-import { TypeIndexedEntity } from "./types.ts";
-export const save = (props: TypeIndexedEntity) => {
-  saveTable({
-    name: "customer",
-    columns: [
-      {
-        tableName: "customer",
-        name: "customer_ID",
-        type: "int",
-        oritinalType: "int",
-        autoIncrement: true,
-        unique: true,
-        bytes: 4,
-        nullable: false,
-      },
-    ],
-  });
+import { saveEntity } from "./interface-sqlite.ts";
+import { TypeInternalEntity } from "./types.ts";
+export const save = (props: TypeInternalEntity) => {
+  if (props.type === "entity") {
+    return saveEntity(props.value);
+  }
 };
