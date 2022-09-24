@@ -40,7 +40,7 @@ export const saveColumns: TypeSaveColumns = (
     const data: TypeInternalEntityColumnReturn[] = [];
     for (const column of columns) {
       const { columnName, type, oritinalType, nullable, default: defaultx } = column;
-      let values: any = {
+      let values: Record<string, boolean | string | number | null> = {
         [c.names.TABLE_ENTITY__ID]: entity_ID,
         [c.names.TABLE_COLUMN__COLUMN_NAME]: columnName,
         [c.names.TABLE_COLUMN__TYPE]: type,
