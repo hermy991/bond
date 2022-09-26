@@ -1,8 +1,10 @@
 import { TypeInternalEntityParam } from "./entity.ts";
 
-export type TypeInternalEntity = {
+export type TypeSaveEntity = {
   type: "entity";
   value: TypeInternalEntityParam;
 };
 
-export type TypeSaveProps = TypeInternalEntity;
+export type TypeSave = TypeSaveEntity;
+
+export type TypeQueryOptions = { columns?: boolean };

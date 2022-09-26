@@ -1,7 +1,9 @@
+import { TypeInternalEntityParam } from "./entity.ts";
 import { saveEntity } from "./interface-sqlite.ts";
-import { TypeInternalEntity } from "./types.ts";
-export const save = (props: TypeInternalEntity) => {
-  if (props.type === "entity") {
-    return saveEntity(props.value);
+export { databaseClose, databaseOpen, isDatabaseOpen } from "./interface-sqlite.ts";
+
+export function save(type: "entity", entity: TypeInternalEntityParam): any {
+  if (type === "entity") {
+    return saveEntity(entity);
   }
-};
+}
