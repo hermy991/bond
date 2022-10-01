@@ -1,5 +1,5 @@
-import { queryEntity } from "./interface-sqlite.ts";
-export { databaseClose, databaseOpen, isDatabaseOpen } from "./interface-sqlite.ts";
+import { queryEntity } from "./interfaceSqlite.ts";
+export { databaseClose, databaseOpen, isDatabaseOpen } from "./interfaceSqlite.ts";
 
 export type TypeQueryOptions = { columns?: boolean };
 

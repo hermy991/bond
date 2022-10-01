@@ -1,6 +1,6 @@
 import { assertEquals } from "std/testing/asserts.ts";
-import { query } from "../../src/db-internal/query.ts";
-import { save } from "../../src/db-internal/save.ts";
+import { query } from "../../src/internalDatabase/query.ts";
+import { save } from "../../src/internalDatabase/save.ts";
 import { resetDatabase } from "../utils.ts";
 
 Deno.test({

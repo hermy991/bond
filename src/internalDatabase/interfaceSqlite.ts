@@ -7,6 +7,7 @@ import {
   TypeInternalEntityReturn,
 } from "./entity.ts";
 import c from "./sql.ts";
+import { TypeInternalUniqueParam, TypeInternalUniqueReturn } from "./unique.ts";
 
 export let db = new Database(":memory:");
 
@@ -31,6 +32,14 @@ const entityTransformer = (x: Record<string, string | number | boolean | null>) 
   entityName: x[c.names.TABLE_ENTITY__ENTITY_NAME],
   schema: x[c.names.TABLE_ENTITY__SCHEMA],
 } as TypeInternalEntityReturn);
+
+const uniqueTransformer = (x: Record<string, string | number | boolean | null>) => ({
+  unique_ID: x[c.names.TABLE_UNIQUE__ID],
+  entity_ID: x[c.names.TABLE_ENTITY__ID],
+  uniqueName: x[c.names.TABLE_UNIQUE__UNIQUE_NAME],
+  columnIds: (x[c.names.TABLE_UNIQUE__COLUMN_IDS] as string).split(",").map((x) => Number(x)),
+  columnNames: (x[c.names.TABLE_UNIQUE__COLUMN_NAMES] as string).split(","),
+} as TypeInternalUniqueReturn);
 
 const columnTransformer = (x: Record<string, string | number | boolean | null>) => ({
   column_ID: x[c.names.TABLE_COLUMN__ID],
@@ -62,6 +71,30 @@ export function saveEntity(entity: TypeInternalEntityParam): TypeInternalEntityR
     const tempColumns = saveColumns(rows[0][c.names.TABLE_ENTITY__ID], columns);
     const tempEntity = { ...entityTransformer(rows[0]), columns: tempColumns } as TypeInternalEntityReturn;
     return tempEntity;
+  }
+}
+
+export function saveUnique(unique: TypeInternalUniqueParam): TypeInternalUniqueReturn | undefined {
+  const { uniqueName, entity_ID, columns } = unique;
+  const tempColumns = queryColumns(entity_ID)
+    .filter((x: any) =>
+      columns.indexOf(x.column_ID) >= 0 ||
+      columns.indexOf(x.columnName) >= 0
+    );
+  const columnIds: number[] = tempColumns.map((x: any) => x.column_ID);
+  const columnNames: string[] = tempColumns.map((x: any) => x.columnName);
+  db.run(c.queries.CREATE_UNIQUE);
+  const values = {
+    [c.names.TABLE_ENTITY__ID]: entity_ID,
+    [c.names.TABLE_UNIQUE__UNIQUE_NAME]: uniqueName,
+    [c.names.TABLE_UNIQUE__COLUMN_IDS]: columnIds.join(","),
+    [c.names.TABLE_UNIQUE__COLUMN_NAMES]: columnNames.join(","),
+  };
+  db.exec(c.queries.INSERT_UNIQUE, values);
+  const rows = db.prepare(c.queries.SELECT_UNIQUE_LAST_INSERT).all();
+  if (rows.length === 1) {
+    const tempUnique = uniqueTransformer(rows[0]);
+    return tempUnique;
   }
 }
 

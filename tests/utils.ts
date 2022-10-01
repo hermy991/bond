@@ -1,4 +1,4 @@
-import { databaseClose, databaseOpen } from "../src/db-internal/save.ts";
+import { databaseClose, databaseOpen } from "../src/internalDatabase/save.ts";
 
 export function resetDatabase() {
   databaseClose();
