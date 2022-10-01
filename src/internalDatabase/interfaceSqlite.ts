@@ -77,12 +77,12 @@ export function saveEntity(entity: TypeInternalEntityParam): TypeInternalEntityR
 export function saveUnique(unique: TypeInternalUniqueParam): TypeInternalUniqueReturn | undefined {
   const { uniqueName, entity_ID, columns } = unique;
   const tempColumns = queryColumns(entity_ID)
-    .filter((x: any) =>
+    .filter((x: TypeInternalEntityColumnReturn) =>
       columns.indexOf(x.column_ID) >= 0 ||
       columns.indexOf(x.columnName) >= 0
     );
-  const columnIds: number[] = tempColumns.map((x: any) => x.column_ID);
-  const columnNames: string[] = tempColumns.map((x: any) => x.columnName);
+  const columnIds: number[] = tempColumns.map((x: TypeInternalEntityColumnReturn) => x.column_ID);
+  const columnNames: string[] = tempColumns.map((x: TypeInternalEntityColumnReturn) => x.columnName);
   db.run(c.queries.CREATE_UNIQUE);
   const values = {
     [c.names.TABLE_ENTITY__ID]: entity_ID,
