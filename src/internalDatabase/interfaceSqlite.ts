@@ -113,24 +113,28 @@ export function queryEntity(
 ): TypeInternalEntityReturn | undefined {
   db.run(c.queries.CREATE_ENTITY);
   let rows: Record<string, string | number | boolean | null>[] = [];
-  if (typeof entityOrFullEntityNameOrEntity_ID === "object") {
-    const { entityName, schema } = entityOrFullEntityNameOrEntity_ID;
-    const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ENTITY_NAME} = '${entityName}'
-  AND ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}
-`;
-    rows = db.prepare(sql).all();
-  } else if (typeof entityOrFullEntityNameOrEntity_ID === "string") {
-    const fullEntityName = entityOrFullEntityNameOrEntity_ID;
-    const { entityName, schema } = toEntityNameAndSchema(fullEntityName);
-    const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ENTITY_NAME} = '${entityName}'
-  AND ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}
-`;
-    rows = db.prepare(sql).all();
-  } else if (typeof entityOrFullEntityNameOrEntity_ID === "number") {
-    const entity_ID = entityOrFullEntityNameOrEntity_ID;
-    const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ID} = ${entity_ID}
-`;
-    rows = db.prepare(sql).all();
+  switch (typeof entityOrFullEntityNameOrEntity_ID) {
+    case "object": {
+      const { entityName, schema } = entityOrFullEntityNameOrEntity_ID;
+      const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ENTITY_NAME} = '${entityName}'
+    AND ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}\n`;
+      rows = db.prepare(sql).all();
+      break;
+    }
+    case "string": {
+      const fullEntityName = entityOrFullEntityNameOrEntity_ID;
+      const { entityName, schema } = toEntityNameAndSchema(fullEntityName);
+      const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ENTITY_NAME} = '${entityName}'
+  AND ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}\n`;
+      rows = db.prepare(sql).all();
+      break;
+    }
+    case "number": {
+      const entity_ID = entityOrFullEntityNameOrEntity_ID;
+      const sql = `${c.queries.SELECT_ENTITY}WHERE ${c.names.TABLE_ENTITY__ID} = ${entity_ID}\n`;
+      rows = db.prepare(sql).all();
+      break;
+    }
   }
   if (rows.length === 1) {
     let tempColumns: TypeInternalEntityColumnReturn[] = [];
@@ -214,8 +218,7 @@ export function queryColumns(fullEntityNameOrEntity_ID: string | number): TypeIn
     SELECT ${c.names.TABLE_ENTITY__ID} 
     FROM ${c.names.TABLE_ENTITY}
     WHERE ${c.names.TABLE_ENTITY__ENTITY_NAME} = '${entityName}'
-      ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}
-  )`;
+      ${c.names.TABLE_ENTITY__SCHEMA} ${schema ? `= '${schema}'` : "IS NULL"}\n`;
     const rows = db.prepare(sql).all();
     data = rows.map(columnTransformer);
   } else if (typeof fullEntityNameOrEntity_ID === "number") {
@@ -225,4 +228,30 @@ export function queryColumns(fullEntityNameOrEntity_ID: string | number): TypeIn
     data = rows.map(columnTransformer);
   }
   return data;
+}
+
+export function queryUnique(uniqueName: string): TypeInternalUniqueReturn | undefined;
+export function queryUnique(unique_ID: number): TypeInternalUniqueReturn | undefined;
+export function queryUnique(uniqueNameOrUnique_ID: string | number): TypeInternalUniqueReturn | undefined {
+  db.run(c.queries.CREATE_UNIQUE);
+  let rows: Record<string, string | number | boolean | null>[] = [];
+  switch (typeof uniqueNameOrUnique_ID) {
+    case "string": {
+      const uniqueName = uniqueNameOrUnique_ID;
+      const sql = `${c.queries.SELECT_UNIQUE}WHERE ${c.names.TABLE_UNIQUE__UNIQUE_NAME} = '${uniqueName}'\n`;
+      rows = db.prepare(sql).all();
+      break;
+    }
+    case "number": {
+      const unique_ID = uniqueNameOrUnique_ID;
+      const sql = `${c.queries.SELECT_UNIQUE}WHERE ${c.names.TABLE_UNIQUE__ID} = ${unique_ID}
+  `;
+      rows = db.prepare(sql).all();
+      break;
+    }
+  }
+  if (rows.length === 1) {
+    const tempUnique = { ...uniqueTransformer(rows[0]) } as TypeInternalUniqueReturn;
+    return tempUnique;
+  }
 }
