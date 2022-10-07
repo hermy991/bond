@@ -1,5 +1,4 @@
 import { assertEquals, assertExists } from "std/testing/asserts.ts";
-import { TypeInternalEntityReturn } from "../../src/internalDatabase/entity.ts";
 import { query } from "../../src/internalDatabase/query.ts";
 import { save } from "../../src/internalDatabase/save.ts";
 import { resetDatabase } from "../utils.ts";
