@@ -11,5 +11,5 @@ import {
 
 export type TypeSaveColumns = (
   entity_ID: number,
-  columns: [TypeInternalEntityColumnParam, ...TypeInternalEntityColumnParam[]],
+  columns: TypeInternalEntityColumnParam[],
 ) => TypeInternalEntityColumnReturn[] | undefined;

@@ -64,7 +64,7 @@ export type TypeInternalEntityColumnParam =
 export type TypeInternalEntityParam = {
   entityName: string;
   schema?: string;
-  columns: [TypeInternalEntityColumnParam, ...TypeInternalEntityColumnParam[]];
+  columns: TypeInternalEntityColumnParam[];
 };
 
 export type TypeInternalEntityColumnReturn = { column_ID: number; entity_ID: number } & TypeInternalEntityColumnParam;

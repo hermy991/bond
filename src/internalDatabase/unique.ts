@@ -1,7 +1,7 @@
 export type TypeInternalUniqueParam = {
   uniqueName: string;
   entity_ID: number;
-  columns: [string | number, ...Array<string | number>];
+  columns: Array<string | number>;
 };
 
 export type TypeInternalUniqueReturn = {
