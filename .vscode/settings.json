@@ -17,7 +17,8 @@
     "editorRuler.foreground": "#ff4081",
     "sash.hoverBorder": "#fa1b49",
     "statusBarItem.remoteBackground": "#dd0531",
-    "statusBarItem.remoteForeground": "#e7e7e7"
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799"
   },
   "peacock.color": "#dd0531",
   "deno.enable": true,

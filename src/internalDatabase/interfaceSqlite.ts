@@ -148,7 +148,7 @@ export function queryEntity(
 
 export function saveColumns(
   entity_ID: number,
-  columns: [TypeInternalEntityColumnParam, ...TypeInternalEntityColumnParam[]],
+  columns: TypeInternalEntityColumnParam[],
 ): TypeInternalEntityColumnReturn[] | undefined {
   if (columns.length) {
     db.run(c.queries.CREATE_COLUMN);
