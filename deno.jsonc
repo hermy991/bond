@@ -1,7 +1,7 @@
 {
   "tasks": {
     "test": "deno test --unsafely-ignore-certificate-errors=localhost --allow-ffi --allow-env --unstable ",
-    "test:debug": "deno test --unsafely-ignore-certificate-errors=localhost --inspect --allow-all --unstable ."
+    "test:debug": "deno test --unsafely-ignore-certificate-errors=localhost --inspect --allow-all --unstable "
   },
   "compilerOptions": {
     // "emitDecoratorMetadata": true
