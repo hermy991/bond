@@ -1,13 +1,13 @@
-import * as path from "deno/path/mod.ts";
+import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderUpdate } from "../builders/builder_update.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderUpdate } from "../builders/BuilderUpdate.ts";
 import {
   ParamUpdateEntity,
   ParamUpdateParams,
   ParamUpdateReturning,
   ParamUpdateSet,
-} from "../builders/params/param_update.ts";
+} from "../builders/params/ParamUpdate.ts";
 
 export class ExecutorUpdate<T> {
   ub: BuilderUpdate<T> = new BuilderUpdate(<Driver> {});

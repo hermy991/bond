@@ -1,5 +1,5 @@
-import { ParamComplexValues, ParamSimpleValues } from "./param_select.ts";
-import { ParamPartialEntity } from "./param_partial_entity.ts";
+import { ParamComplexValues, ParamSimpleValues } from "./ParamSelect.ts";
+import { ParamPartialEntity } from "./ParamPartialEntity.ts";
 
 export type ParamUpdateOptions = {
   autoUpdate?: boolean;

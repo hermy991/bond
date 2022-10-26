@@ -1,1 +1,1 @@
-import { ConnectionOptionsBase } from "../../connection_options.ts";
+export { DatasourceOptionsBase } from "../../datasource/DatasourceOptions.ts";

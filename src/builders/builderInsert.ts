@@ -1,13 +1,8 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
-import {
-  ParamInsertEntity,
-  ParamInsertOptions,
-  ParamInsertReturning,
-  ParamInsertValue,
-} from "./params/param_insert.ts";
-import { Driver } from "../connection_type.ts";
-import { findColumn, findPrimaryColumn, tempStore } from "../../stores/store.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
+import { ParamInsertEntity, ParamInsertOptions, ParamInsertReturning, ParamInsertValue } from "./params/ParamInsert.ts";
+import { Driver } from "../drivers/mod.ts";
+// import { findColumn, findPrimaryColumn } from "../../stores/store.ts";
 
 export class BuilderInsert<T> extends BuilderBase {
   #options: ParamInsertOptions = { autoInsert: true, autoGeneratePrimaryKey: true };

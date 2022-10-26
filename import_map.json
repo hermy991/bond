@@ -1,6 +1,9 @@
 {
   "imports": {
     "std/": "https://deno.land/std@0.160.0/",
-    "sqlite3": "https://deno.land/x/sqlite3@0.6.1/mod.ts"
+    "sqlite3": "https://deno.land/x/sqlite3@0.6.1/mod.ts",
+    "xml": "https://deno.land/x/xml@2.0.4/mod.ts",
+    "dotenv": "https://deno.land/x/dotenv_parser@v1.0.2/mod.ts",
+    "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts"
   }
 }

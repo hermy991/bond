@@ -1,9 +1,9 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
-import { BuilderUpdate } from "./builder_update.ts";
-import { BuilderInsert } from "./builder_insert.ts";
-import { ParamUpsertEntity, ParamUpsertValue } from "./params/param_upsert.ts";
-import { Driver } from "../connection_type.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
+import { BuilderUpdate } from "./BuilderUpdate.ts";
+import { BuilderInsert } from "./BuilderInsert.ts";
+import { ParamUpsertEntity, ParamUpsertValue } from "./params/ParamUpsert.ts";
+import { Driver } from "../drivers/mod.ts";
 
 export class BuilderUpsert<T> extends BuilderBase {
   #entityData:

@@ -1,7 +1,7 @@
-import * as path from "deno/path/mod.ts";
+import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderRename } from "../builders/builder_rename.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderRename } from "../builders/BuilderRename.ts";
 
 export class ExecutorRename {
   rb: BuilderRename = new BuilderRename(<Driver> {});

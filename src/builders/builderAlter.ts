@@ -1,8 +1,8 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
+import { BuilderBase } from "./base/builderBase.ts";
 import { ParamColumnAjust, ParamColumnCreate } from "./params/param_column.ts";
 import { ParamRelationDefinition } from "./params/param_relation.ts";
-import { Driver } from "../connection_type.ts";
+import { Driver } from "../drivers/mod.ts";
 
 export class BuilderAlter extends BuilderBase {
   #nameData: { entity: string; schema?: string } | undefined = undefined;

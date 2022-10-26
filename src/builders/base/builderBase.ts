@@ -1,7 +1,9 @@
 // import { Logging } from "../../loggings/logging.ts";
 // import { Driver } from "../../connection_type.ts";
+import { Driver } from "../../drivers/mod.ts";
+import { Logging } from "../../loggings/logging.ts";
 import { clearNames, generateName1 } from "../../utilities/sql.ts";
-import { getMetadataChecks, getMetadataColumns, getMetadataEntityData } from "../../../decorators/metadata/metadata.ts";
+// import { getMetadataChecks, getMetadataColumns, getMetadataEntityData } from "../../../decorators/metadata/metadata.ts";
 
 export class BuilderBase {
   #printSql = false;

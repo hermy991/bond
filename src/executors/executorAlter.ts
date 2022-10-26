@@ -1,9 +1,9 @@
 import * as path from "std/path/mod.ts";
-// import { Logging } from "../loggings/logging.ts";
-import { ParamColumnAjust, ParamColumnCreate } from "../builders/params/param_column.ts";
-import { ParamRelationDefinition } from "../builders/params/param_relation.ts";
-// import { Driver } from "../connection_type.ts";
-// import { BuilderAlter } from "../builders/builder_alter.ts";
+import { Logging } from "../loggings/logging.ts";
+import { ParamColumnAjust, ParamColumnCreate } from "../builders/params/ParamColumn.ts";
+import { ParamRelationDefinition } from "../builders/params/ParamRelation.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderAlter } from "../builders/BuilderAlter.ts";
 
 export class ExecutorAlter {
   ab: BuilderAlter = new BuilderAlter(<Driver> {});

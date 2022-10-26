@@ -1,10 +1,9 @@
-import { dotenv } from "../../deps.ts";
-import { yaml } from "../../deps.ts";
-import { xml } from "../../deps.ts";
-import { ConnectionOptions } from "./connection_options.ts";
-import { error } from "../error/error_utills.ts";
-import { LoggingOptions, LogginKeys } from "./loggings/logging.ts";
-// import { hash } from "../../deps.ts";
+import * as dotenv from "dotenv";
+import * as yaml from "std/encoding/yaml.ts";
+import * as xml from "xml";
+import { DatasourceOptions } from "../datasource/DatasourceOptions.ts";
+import { error } from "../utilities/error.ts";
+import { LoggingOptions, LogginKeys } from "../loggings/logging.ts";
 
 const FILE_NAME = "spinosaurus";
 
@@ -139,7 +138,7 @@ export function parseLoggingOptions(value: string) {
 /**
  * Reads connection options stored in spinosaurus configuration file.
  */
-export async function getConnectionOptions(connectionName?: string): Promise<ConnectionOptions> {
+export async function getConnectionOptions(connectionName?: string): Promise<DatasourceOptions> {
   const fileOptions = await getConnectionEnvOptions() ||
     await getConnectionFileOptions(`.env`) ||
     await getConnectionFileOptions(`env`) ||
@@ -166,7 +165,7 @@ export async function getConnectionOptions(connectionName?: string): Promise<Con
   }
   throw error({ name: "ErrorConnectionOptionsNotFound" });
 }
-export async function getConnectionsOptions(): Promise<ConnectionOptions[]> {
+export async function getConnectionsOptions(): Promise<DatasourceOptions[]> {
   const fileOptions = await getConnectionEnvOptions() ||
     await getConnectionFileOptions(`.env`) ||
     await getConnectionFileOptions(`env`) ||
@@ -365,4 +364,18 @@ export function findConnection(options: any | Array<any>, name?: string) {
   } else if (!name || options["name"] === name) {
     return options;
   }
+}
+
+export function filterConnectionProps(keyConf: any, values: any, changes?: Record<string, any>) {
+  const currValue: { [x: string]: string | number | boolean | any } = {};
+  Object.keys(keyConf).forEach((key) => values[key] ? currValue[keyConf[key]] = values[key] : "");
+  if (!changes) {
+    return currValue;
+  }
+  for (const key in currValue) {
+    if (key in changes && changes[key]) {
+      currValue[key] = changes[key];
+    }
+  }
+  return currValue;
 }

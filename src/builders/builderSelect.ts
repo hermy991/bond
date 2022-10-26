@@ -1,14 +1,14 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
-import { Driver } from "../connection_type.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
+import { Driver } from "../drivers/mod.ts";
 import {
   ParamClauseOptions,
   ParamComplexClauseOptions,
   ParamComplexValues,
   ParamFromOptions,
   ParamSelectColumn,
-} from "./params/param_select.ts";
-import { ExecutorSelect } from "../executors/executor_select.ts";
+} from "./params/ParamSelect.ts";
+import { ExecutorSelect } from "../executors/ExecutorSelect.ts";
 
 export class BuilderSelect extends BuilderBase {
   #selectData: Array<{ column: string; as?: string }> = [];

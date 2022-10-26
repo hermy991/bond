@@ -1,4 +1,4 @@
-import { ExecutorSelect } from "../../executors/executor_select.ts";
+import { ExecutorSelect } from "../../executors/ExecutorSelect.ts";
 /**
  * The name of a column in table. The column name can be qualified with a subfield name or array subscript,
  * if needed.

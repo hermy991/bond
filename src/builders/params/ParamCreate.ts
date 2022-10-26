@@ -1,6 +1,6 @@
-import { ParamNext } from "./param_next.ts";
-import { ParamAfter } from "./param_after.ts";
-import { ParamInsertOptions } from "./param_insert.ts";
+import { ParamNext } from "./ParamNext.ts";
+import { ParamAfter } from "./ParamAfter.ts";
+import { ParamInsertOptions } from "./ParamInsert.ts";
 
 export type ParamCreateOptions =
   & { createByEntity?: boolean }

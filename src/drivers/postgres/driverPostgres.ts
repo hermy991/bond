@@ -1,25 +1,25 @@
-import * as sql from "./driver_postgres_sql.ts";
-import { ConnectionOptionsPostgres } from "../../connection_options.ts";
-import { interpolate, stringify } from "../../builders/base/sql.ts";
-import { IConnectionOperations } from "../../iconnection_operations.ts";
-import { ParamSchemaDefinition } from "../../builders/params/param_schema.ts";
-import { ParamColumnAjust, ParamColumnCreate, ParamColumnDefinition } from "../../builders/params/param_column.ts";
-import { ParamCheckCreate } from "../../builders/params/param_check.ts";
-import { ParamUniqueCreate } from "../../builders/params/param_unique.ts";
-import { ParamRelationCreate } from "../../builders/params/param_relation.ts";
-import { ParamCommentColumnDerinition } from "../../builders/params/param_comment.ts";
-import { ParamComplexValues, ParamSimpleValues } from "../../builders/params/param_select.ts";
-import { initConnection } from "./driver_postgres_pool.ts";
-import { filterConnectionProps } from "../../connection_operations.ts";
-import { MetadataStore } from "../../../decorators/metadata/metadata_store.ts";
-import { EntityOptions } from "../../../decorators/options/entity_options.ts";
-import { ColumnOptions } from "../../../decorators/options/column_options.ts";
-import { ColumnType } from "../../../decorators/options/column_type.ts";
-import { postgres } from "../../../../deps.ts";
-import { KEY_CONFIG } from "./driver_postgres_variables.ts";
-import { ExecuteResult, Query } from "../../execute_result.ts";
+import * as sql from "./driverPostgresSql.ts";
+import { DatasourceOptionsPostgres } from "../../datasource/DatasourceOptions.ts";
+import { interpolate, stringify } from "../../utilities/sql.ts";
+import { IDatasourceOperations } from "../../dataSource/idataSourceOperations.ts";
+import { ParamSchemaDefinition } from "../../builders/params/ParamSchema.ts";
+import { ParamColumnAjust, ParamColumnCreate, ParamColumnDefinition } from "../../builders/params/ParamColumn.ts";
+import { ParamCheckCreate } from "../../builders/params/ParamCheck.ts";
+import { ParamUniqueCreate } from "../../builders/params/ParamUnique.ts";
+import { ParamRelationCreate } from "../../builders/params/ParamRelation.ts";
+import { ParamCommentColumnDerinition } from "../../builders/params/ParamComment.ts";
+import { ParamComplexValues, ParamSimpleValues } from "../../builders/params/ParamSelect.ts";
+import { initConnection } from "./DriverPostgresPool.ts";
+import { filterConnectionProps } from "../../utilities/datasource.ts";
+// import { MetadataStore } from "../../../decorators/metadata/metadata_store.ts";
+// import { EntityOptions } from "../../../decorators/options/entity_options.ts";
+// import { ColumnOptions } from "../../../decorators/options/column_options.ts";
+// import { ColumnType } from "../../../decorators/options/column_type.ts";
+import * as postgres from "postgres";
+import { KEY_CONFIG } from "./DriverPostgresVariables.ts";
+import { ExecuteResult, Query } from "../../datasource/ExecuteResult.ts";
 
-class DriverPostgres implements IConnectionOperations {
+class DriverPostgres implements IDatasourceOperations {
   #currentDatabase?: string;
   #currentSchema?: string;
   delimiters: [string, string?] = [`"`];
@@ -28,11 +28,12 @@ class DriverPostgres implements IConnectionOperations {
    * Connection Options
    */
 
-  constructor(public options: ConnectionOptionsPostgres) {}
+  constructor(public options: DatasourceOptionsPostgres) {}
   /* Basic Connection Operations*/
   stringify(value: ParamSimpleValues | ParamSimpleValues[]): string {
     if (
-      value === undefined || value === null || typeof (value) == "boolean" || typeof (value) == "number" ||
+      value === undefined || value === null || typeof (value) == "boolean" ||
+      typeof (value) == "number" ||
       typeof (value) == "string"
     ) {
       return stringify(value);
@@ -51,7 +52,10 @@ class DriverPostgres implements IConnectionOperations {
     }
     return `NULL`;
   }
-  interpolate(conditions: [string, ...string[]] | string, params?: ParamComplexValues): Array<string> {
+  interpolate(
+    conditions: [string, ...string[]] | string,
+    params?: ParamComplexValues,
+  ): Array<string> {
     const cloned = self.structuredClone(params || {});
     const keys = Object.keys(cloned);
     for (let i = 0; i < keys.length; i++) {
@@ -727,7 +731,11 @@ WHERE nsp.nspname NOT IN('pg_catalog', 'information_schema', 'pg_toast')
   async createTransaction(
     options?: { transactionName: string; changes?: any },
   ): Promise<{ transaction: any; [x: string]: any } | undefined> {
-    const driverConf = filterConnectionProps(KEY_CONFIG, this.options, options?.changes);
+    const driverConf = filterConnectionProps(
+      KEY_CONFIG,
+      this.options,
+      options?.changes,
+    );
     const client = new postgres.Client(driverConf);
     await client.connect();
     if (options?.transactionName) {
@@ -784,13 +792,20 @@ WHERE nsp.nspname NOT IN('pg_catalog', 'information_schema', 'pg_toast')
     }
   }
 
-  async execute(query: string, options?: { changes?: any; transaction?: any }): Promise<ExecuteResult> {
+  async execute(
+    query: string,
+    options?: { changes?: any; transaction?: any },
+  ): Promise<ExecuteResult> {
     let rs: ExecuteResult;
     let pgr: any;
     if (options?.transaction) {
       pgr = await options?.transaction.queryObject(query);
     } else {
-      const driverConf = filterConnectionProps(KEY_CONFIG, this.options, options?.changes);
+      const driverConf = filterConnectionProps(
+        KEY_CONFIG,
+        this.options,
+        options?.changes,
+      );
       const client = new postgres.Client(driverConf);
       await client.connect();
       pgr = await client.queryObject(query);
@@ -804,16 +819,26 @@ WHERE nsp.nspname NOT IN('pg_catalog', 'information_schema', 'pg_toast')
     return rs;
   }
 
-  async getOne(query: string, options?: { changes?: any; transaction?: any }): Promise<any> {
+  async getOne(
+    query: string,
+    options?: { changes?: any; transaction?: any },
+  ): Promise<any> {
     const rows = await this.getMany(query, options);
     return rows.length ? rows[0] : null;
   }
-  async getMany(query: string, options?: { changes?: any; transaction?: any }): Promise<Array<any>> {
+  async getMany(
+    query: string,
+    options?: { changes?: any; transaction?: any },
+  ): Promise<Array<any>> {
     let pgr: any;
     if (options?.transaction) {
       pgr = await options?.transaction.queryObject(query);
     } else {
-      const driverConf = filterConnectionProps(KEY_CONFIG, this.options, options?.changes);
+      const driverConf = filterConnectionProps(
+        KEY_CONFIG,
+        this.options,
+        options?.changes,
+      );
       const client = new postgres.Client(driverConf);
       await client.connect();
       pgr = await client.queryObject(query);
@@ -821,7 +846,10 @@ WHERE nsp.nspname NOT IN('pg_catalog', 'information_schema', 'pg_toast')
     }
     return pgr.rows;
   }
-  getMultiple(query: string, options?: { changes?: any; transaction?: any }): Promise<Array<any>> {
+  getMultiple(
+    query: string,
+    options?: { changes?: any; transaction?: any },
+  ): Promise<Array<any>> {
     throw "not implemented";
   }
 }

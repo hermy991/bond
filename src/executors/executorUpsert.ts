@@ -1,8 +1,8 @@
 import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderUpsert } from "../builders/builder_upsert.ts";
-import { ParamUpsertEntity, ParamUpsertValue } from "../builders/params/param_upsert.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderUpsert } from "../builders/BuilderUpsert.ts";
+import { ParamUpsertEntity, ParamUpsertValue } from "../builders/params/ParamUpsert.ts";
 
 export class ExecutorUpsert<T> {
   ub: BuilderUpsert<T> = new BuilderUpsert(<Driver> {});

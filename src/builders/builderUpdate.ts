@@ -1,14 +1,14 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
 import {
   ParamUpdateEntity,
   ParamUpdateOptions,
   ParamUpdateParams,
   ParamUpdateReturning,
   ParamUpdateSet,
-} from "./params/param_update.ts";
-import { Driver } from "../connection_type.ts";
-import { findColumn, findPrimaryColumn } from "../../stores/store.ts";
+} from "./params/ParamUpdate.ts";
+import { Driver } from "../drivers/mod.ts";
+// import { findColumn, findPrimaryColumn } from "../../stores/store.ts";
 
 export class BuilderUpdate<T> extends BuilderBase {
   #options: ParamUpdateOptions = { autoUpdate: true, updateWithoutPrimaryKey: false };

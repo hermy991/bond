@@ -7,7 +7,7 @@ import { ParamRelationCreate } from "./builders/params/param_relation.ts";
 import { ParamCommentColumnDerinition } from "./builders/params/param_comment.ts";
 import { ParamComplexValues, ParamSimpleValues } from "./builders/params/param_select.ts";
 
-export interface IConnectionOperations {
+export interface IDatasourceOperations {
   /* Internal Sql Operations*/
   stringify(value: ParamSimpleValues | Array<ParamSimpleValues>): string;
   interpolate(conditions: [string, ...string[]], params?: ParamComplexValues): Array<string>;

@@ -1,7 +1,7 @@
-import * as path from "deno/path/mod.ts";
+import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderDrop } from "../builders/builder_drop.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderDrop } from "../builders/BuilderDrop.ts";
 
 export class ExecutorDrop {
   db: BuilderDrop = new BuilderDrop(<Driver> {});

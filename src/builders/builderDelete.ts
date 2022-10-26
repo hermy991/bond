@@ -1,7 +1,7 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
-import { Driver } from "../connection_type.ts";
-import { ParamComplexValues } from "./params/param_select.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
+import { Driver } from "../drivers/mod.ts";
+import { ParamComplexValues } from "./params/ParamSelect.ts";
 
 export class BuilderDelete extends BuilderBase {
   #entityData: { entity: string; schema?: string } | Function | null = null;

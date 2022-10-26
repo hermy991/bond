@@ -1,5 +1,5 @@
-import { ParamSimpleValues } from "./param_select.ts";
-import { ParamPartialEntity } from "./param_partial_entity.ts";
+import { ParamSimpleValues } from "./ParamSelect.ts";
+import { ParamPartialEntity } from "./ParamPartialEntity.ts";
 
 export type ParamInsertOptions = {
   autoInsert?: boolean;

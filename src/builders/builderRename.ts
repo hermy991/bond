@@ -1,6 +1,6 @@
 import { Logging } from "../loggings/logging.ts";
-import { BuilderBase } from "./base/builder_base.ts";
-import { Driver } from "../connection_type.ts";
+import { BuilderBase } from "./base/BuilderBase.ts";
+import { Driver } from "../drivers/mod.ts";
 
 export class BuilderRename extends BuilderBase {
   #fromData: { entity: string; schema?: string } | undefined = undefined;

@@ -1,8 +1,8 @@
-import * as path from "deno/path/mod.ts";
+import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderInsert } from "../builders/builder_insert.ts";
-import { ParamInsertEntity, ParamInsertReturning, ParamInsertValue } from "../builders/params/param_insert.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderInsert } from "../builders/BuilderInsert.ts";
+import { ParamInsertEntity, ParamInsertReturning, ParamInsertValue } from "../builders/params/ParamInsert.ts";
 
 export class ExecutorInsert<T> {
   ib: BuilderInsert<T> = new BuilderInsert(<Driver> {});

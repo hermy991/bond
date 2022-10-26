@@ -1,9 +1,13 @@
-import * as path from "deno/path/mod.ts";
+import * as path from "std/path/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { Driver } from "../connection_type.ts";
-import { BuilderSelect } from "../builders/builder_select.ts";
-import { ParamFromOptions } from "../builders/params/param_select.ts";
-import { ParamClauseOptions, ParamComplexValues, ParamSelectColumn } from "../builders/params/param_select.ts";
+import { Driver } from "../drivers/mod.ts";
+import { BuilderSelect } from "../builders/BuilderSelect.ts";
+import {
+  ParamClauseOptions,
+  ParamComplexValues,
+  ParamFromOptions,
+  ParamSelectColumn,
+} from "../builders/params/ParamSelect.ts";
 
 export class ExecutorSelect {
   sb: BuilderSelect = new BuilderSelect(<Driver> {});

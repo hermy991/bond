@@ -1,5 +1,5 @@
-import * as path from "deno/path/mod.ts";
-import { Driver } from "./connection_type.ts";
+import * as path from "std/path/mod.ts";
+import { Driver } from "../drivers/mod.ts";
 import { createLogging, Logging } from "./loggings/logging.ts";
 import { ConnectionOptions } from "./connection_options.ts";
 import { transferTemp } from "../stores/store.ts";
@@ -22,7 +22,7 @@ import { ExecutorDelete } from "./executors/executor_delete.ts";
 import { ExecutorUpsert } from "./executors/executor_upsert.ts";
 import { ExecuteResult } from "./execute_result.ts";
 
-class Connection {
+class Datasource {
   #transactions: Record<string, any> = {};
   #driver?: Driver;
   #logging?: Logging;
@@ -48,7 +48,8 @@ class Connection {
   getTransaction(): any | undefined {
     const transactionsCount = Object.entries(this.getTransactions()).length;
     if (transactionsCount) {
-      const transaction = Object.entries(this.getTransactions())[transactionsCount - 1][1].transaction;
+      const transaction = Object.entries(this.getTransactions())[transactionsCount - 1][1]
+        .transaction;
       return transaction;
     }
   }
@@ -76,8 +77,18 @@ class Connection {
     return res;
   }
 
-  async checkObject(req: { name: string; schema?: string; database?: string }): Promise<
-    { name: string; schema?: string; database?: string; exists: boolean; oid?: number; dbdata?: any; type?: string }
+  async checkObject(
+    req: { name: string; schema?: string; database?: string },
+  ): Promise<
+    {
+      name: string;
+      schema?: string;
+      database?: string;
+      exists: boolean;
+      oid?: number;
+      dbdata?: any;
+      type?: string;
+    }
   > {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
     const res = await this.#driver.checkObject(req);
@@ -110,30 +121,56 @@ class Connection {
     return executor;
   }
 
-  drop(req: { entity: string; schema?: string } | { schema: string; check?: boolean }) {
+  drop(
+    req: { entity: string; schema?: string } | {
+      schema: string;
+      check?: boolean;
+    },
+  ) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorDrop = new ExecutorDrop(this.#driver, this.#logging);
+    const executor: ExecutorDrop = new ExecutorDrop(
+      this.#driver,
+      this.#logging,
+    );
     executor.drop(req);
     return executor;
   }
 
-  rename(from: { entity: string; schema?: string }, to?: { entity: string; schema?: string }) {
+  rename(
+    from: { entity: string; schema?: string },
+    to?: { entity: string; schema?: string },
+  ) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorRename = new ExecutorRename(this.#driver, this.#logging);
+    const executor: ExecutorRename = new ExecutorRename(
+      this.#driver,
+      this.#logging,
+    );
     executor.rename(from, to);
     return executor;
   }
 
-  select(...columns: Array<{ column: string; as?: string } | [string, string?]>) {
+  select(
+    ...columns: Array<{ column: string; as?: string } | [string, string?]>
+  ) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorSelect = new ExecutorSelect(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorSelect = new ExecutorSelect(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.select(...columns);
     return executor;
   }
 
-  selectDistinct(...columns: Array<{ column: string; as?: string } | [string, string?]>) {
+  selectDistinct(
+    ...columns: Array<{ column: string; as?: string } | [string, string?]>
+  ) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorSelect = new ExecutorSelect(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorSelect = new ExecutorSelect(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.selectDistinct(...columns);
     return executor;
   }
@@ -231,26 +268,42 @@ class Connection {
    */
   from(
     // deno-lint-ignore camelcase
-    entity_entityName_subQuery_fromOption: Function | string | ExecutorSelect | ParamFromOptions,
+    entity_entityName_subQuery_fromOption:
+      | Function
+      | string
+      | ExecutorSelect
+      | ParamFromOptions,
     // deno-lint-ignore camelcase
     maybe_as?: string,
   ): ExecutorSelect {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorSelect = new ExecutorSelect(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorSelect = new ExecutorSelect(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.from(<any> entity_entityName_subQuery_fromOption, <any> maybe_as);
     return executor;
   }
 
   update<T>(req: ParamUpdateEntity) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorUpdate<T> = new ExecutorUpdate(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorUpdate<T> = new ExecutorUpdate(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.update(req);
     return executor;
   }
 
   insert<T>(req: ParamInsertEntity) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorInsert<T> = new ExecutorInsert(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorInsert<T> = new ExecutorInsert(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.insert(req);
     return executor;
   }
@@ -259,14 +312,22 @@ class Connection {
     req: { entity: string; schema?: string } | [string, string?] | Function,
   ) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorDelete = new ExecutorDelete(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorDelete = new ExecutorDelete(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.delete(req);
     return executor;
   }
 
   upsert<T>(req: ParamUpsertEntity) {
     if (!this.#driver) throw error({ name: "ErrorConnectionNull" });
-    const executor: ExecutorUpsert<T> = new ExecutorUpsert(this.#driver, this.getTransaction(), this.#logging);
+    const executor: ExecutorUpsert<T> = new ExecutorUpsert(
+      this.#driver,
+      this.getTransaction(),
+      this.#logging,
+    );
     executor.upsert(req);
     return executor;
   }
@@ -290,14 +351,17 @@ class Connection {
    * Wraps given function execution (and all operations made there) in a transaction.
    * using a transaction name
    */
-  async startTransaction<T>(transactionName: string, fun: () => Promise<T>): Promise<T>;
+  async startTransaction<T>(
+    transactionName: string,
+    fun: () => Promise<T>,
+  ): Promise<T>;
 
   /**
    * Wraps given function execution (and all operations made there) in a transaction.
    */
   async startTransaction<T>(
     transactionNameOrFun?: string | ((conn?: this) => Promise<T>),
-    fun?: ((conn?: this) => Promise<T>),
+    fun?: (conn?: this) => Promise<T>,
   ): Promise<T | any | undefined> {
     const transactionName =
       (transactionNameOrFun instanceof Function
@@ -389,4 +453,4 @@ class Connection {
   }
 }
 
-export { Connection };
+export { Datasource };

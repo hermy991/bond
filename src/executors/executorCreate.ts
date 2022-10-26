@@ -1,17 +1,17 @@
-import * as path from "deno/path/mod.ts";
-import { Driver } from "../connection_type.ts";
+import * as path from "std/path/mod.ts";
+import { Driver } from "../drivers/mod.ts";
 import { Logging } from "../loggings/logging.ts";
-import { ParamColumnDefinition } from "../builders/params/param_column.ts";
-import { ParamCheck } from "../builders/params/param_check.ts";
-import { ParamUnique } from "../builders/params/param_unique.ts";
-import { ParamRelationCreate } from "../builders/params/param_relation.ts";
+import { ParamColumnDefinition } from "../builders/params/ParamColumn.ts";
+import { ParamCheck } from "../builders/params/ParamCheck.ts";
+import { ParamUnique } from "../builders/params/ParamUnique.ts";
+import { ParamRelationCreate } from "../builders/params/ParamRelation.ts";
 import {
   ParamCreateAfter,
   ParamCreateData,
   ParamCreateEntity,
   ParamCreateNext,
-} from "../builders/params/param_create.ts";
-import { BuilderCreate } from "../builders/builder_create.ts";
+} from "../builders/params/ParamCreate.ts";
+import { BuilderCreate } from "../builders/BuilderCreate.ts";
 
 export class ExecutorCreate {
   cb: BuilderCreate = new BuilderCreate(<Driver> {});
